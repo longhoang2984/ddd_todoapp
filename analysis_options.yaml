@@ -1,0 +1,12 @@
+include: package:lint/analysis_options.yaml
+analyzer:
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+  errors:
+    mixin_inherits_from_not_object: ignore
+    sort_unnamed_constructors_first: ignore
+    void_checks: ignore
+    missing_return: error
+    missing_required_param: error
+    must_be_immutable: error
