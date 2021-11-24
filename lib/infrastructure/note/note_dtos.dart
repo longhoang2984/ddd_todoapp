@@ -111,7 +111,7 @@ abstract class NoteItemDto with _$NoteItemDto {
       done: noteItem.done,
       ownerId: noteItem.ownerId,
       noteId: noteItem.id,
-      isInitial: true,
+      isInitial: noteItem.isInitial,
     );
   }
 
@@ -122,6 +122,7 @@ abstract class NoteItemDto with _$NoteItemDto {
       done: done,
       ownerId: ownerId,
       noteId: noteId,
+      isInitial: false,
     );
   }
 

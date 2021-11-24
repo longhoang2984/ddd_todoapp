@@ -15,6 +15,7 @@ abstract class NoteItem implements _$NoteItem {
     required bool done,
     required String ownerId,
     required String noteId,
+    @Default(false) bool isInitial,
   }) = _NoteItem;
 
   factory NoteItem.emtpy() => NoteItem(
@@ -23,6 +24,7 @@ abstract class NoteItem implements _$NoteItem {
         done: false,
         ownerId: "",
         noteId: "",
+        isInitial: true,
       );
 
   Option<ValueFailure<dynamic>> get failureOption {

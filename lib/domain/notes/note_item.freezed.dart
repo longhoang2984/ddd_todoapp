@@ -22,13 +22,15 @@ class _$NoteItemTearOff {
       required ItemString name,
       required bool done,
       required String ownerId,
-      required String noteId}) {
+      required String noteId,
+      bool isInitial = false}) {
     return _NoteItem(
       id: id,
       name: name,
       done: done,
       ownerId: ownerId,
       noteId: noteId,
+      isInitial: isInitial,
     );
   }
 }
@@ -43,6 +45,7 @@ mixin _$NoteItem {
   bool get done => throw _privateConstructorUsedError;
   String get ownerId => throw _privateConstructorUsedError;
   String get noteId => throw _privateConstructorUsedError;
+  bool get isInitial => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $NoteItemCopyWith<NoteItem> get copyWith =>
@@ -54,7 +57,12 @@ abstract class $NoteItemCopyWith<$Res> {
   factory $NoteItemCopyWith(NoteItem value, $Res Function(NoteItem) then) =
       _$NoteItemCopyWithImpl<$Res>;
   $Res call(
-      {String id, ItemString name, bool done, String ownerId, String noteId});
+      {String id,
+      ItemString name,
+      bool done,
+      String ownerId,
+      String noteId,
+      bool isInitial});
 }
 
 /// @nodoc
@@ -72,6 +80,7 @@ class _$NoteItemCopyWithImpl<$Res> implements $NoteItemCopyWith<$Res> {
     Object? done = freezed,
     Object? ownerId = freezed,
     Object? noteId = freezed,
+    Object? isInitial = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -94,6 +103,10 @@ class _$NoteItemCopyWithImpl<$Res> implements $NoteItemCopyWith<$Res> {
           ? _value.noteId
           : noteId // ignore: cast_nullable_to_non_nullable
               as String,
+      isInitial: isInitial == freezed
+          ? _value.isInitial
+          : isInitial // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -104,7 +117,12 @@ abstract class _$NoteItemCopyWith<$Res> implements $NoteItemCopyWith<$Res> {
       __$NoteItemCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String id, ItemString name, bool done, String ownerId, String noteId});
+      {String id,
+      ItemString name,
+      bool done,
+      String ownerId,
+      String noteId,
+      bool isInitial});
 }
 
 /// @nodoc
@@ -123,6 +141,7 @@ class __$NoteItemCopyWithImpl<$Res> extends _$NoteItemCopyWithImpl<$Res>
     Object? done = freezed,
     Object? ownerId = freezed,
     Object? noteId = freezed,
+    Object? isInitial = freezed,
   }) {
     return _then(_NoteItem(
       id: id == freezed
@@ -145,6 +164,10 @@ class __$NoteItemCopyWithImpl<$Res> extends _$NoteItemCopyWithImpl<$Res>
           ? _value.noteId
           : noteId // ignore: cast_nullable_to_non_nullable
               as String,
+      isInitial: isInitial == freezed
+          ? _value.isInitial
+          : isInitial // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -157,7 +180,8 @@ class _$_NoteItem extends _NoteItem {
       required this.name,
       required this.done,
       required this.ownerId,
-      required this.noteId})
+      required this.noteId,
+      this.isInitial = false})
       : super._();
 
   @override
@@ -170,10 +194,13 @@ class _$_NoteItem extends _NoteItem {
   final String ownerId;
   @override
   final String noteId;
+  @JsonKey(defaultValue: false)
+  @override
+  final bool isInitial;
 
   @override
   String toString() {
-    return 'NoteItem(id: $id, name: $name, done: $done, ownerId: $ownerId, noteId: $noteId)';
+    return 'NoteItem(id: $id, name: $name, done: $done, ownerId: $ownerId, noteId: $noteId, isInitial: $isInitial)';
   }
 
   @override
@@ -185,11 +212,14 @@ class _$_NoteItem extends _NoteItem {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.done, done) || other.done == done) &&
             (identical(other.ownerId, ownerId) || other.ownerId == ownerId) &&
-            (identical(other.noteId, noteId) || other.noteId == noteId));
+            (identical(other.noteId, noteId) || other.noteId == noteId) &&
+            (identical(other.isInitial, isInitial) ||
+                other.isInitial == isInitial));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, done, ownerId, noteId);
+  int get hashCode =>
+      Object.hash(runtimeType, id, name, done, ownerId, noteId, isInitial);
 
   @JsonKey(ignore: true)
   @override
@@ -203,7 +233,8 @@ abstract class _NoteItem extends NoteItem {
       required ItemString name,
       required bool done,
       required String ownerId,
-      required String noteId}) = _$_NoteItem;
+      required String noteId,
+      bool isInitial}) = _$_NoteItem;
   const _NoteItem._() : super._();
 
   @override
@@ -216,6 +247,8 @@ abstract class _NoteItem extends NoteItem {
   String get ownerId;
   @override
   String get noteId;
+  @override
+  bool get isInitial;
   @override
   @JsonKey(ignore: true)
   _$NoteItemCopyWith<_NoteItem> get copyWith =>
