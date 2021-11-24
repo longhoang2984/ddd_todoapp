@@ -49,14 +49,14 @@ packages:
       name: bloc
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "7.2.1"
+    version: "8.0.1"
   bloc_concurrency:
     dependency: "direct main"
     description:
       name: bloc_concurrency
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.0"
+    version: "0.2.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -348,7 +348,14 @@ packages:
       name: flutter_bloc
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "7.3.3"
+    version: "8.0.0"
+  flutter_config:
+    dependency: "direct dev"
+    description:
+      name: flutter_config
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   flutter_gen_core:
     dependency: transitive
     description:
@@ -363,6 +370,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.1.2"
+  flutter_hooks:
+    dependency: "direct main"
+    description:
+      name: flutter_hooks
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.18.1"
+  flutter_hud:
+    dependency: "direct main"
+    description:
+      name: flutter_hud
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.0"
   flutter_localizations:
     dependency: transitive
     description: flutter
@@ -722,7 +743,7 @@ packages:
     source: hosted
     version: "4.2.4"
   provider:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: provider
       url: "https://pub.dartlang.org"

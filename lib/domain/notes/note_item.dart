@@ -14,13 +14,15 @@ abstract class NoteItem implements _$NoteItem {
     required ItemString name,
     required bool done,
     required String ownerId,
+    required String noteId,
   }) = _NoteItem;
 
   factory NoteItem.emtpy() => NoteItem(
-        id: "",
+        id: DateTime.now().millisecondsSinceEpoch.toString(),
         name: ItemString(''),
         done: false,
         ownerId: "",
+        noteId: "",
       );
 
   Option<ValueFailure<dynamic>> get failureOption {

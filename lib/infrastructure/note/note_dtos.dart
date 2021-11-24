@@ -49,17 +49,28 @@ abstract class NoteDto implements _$NoteDto {
   }
 
   Note get toDomain {
-    final KtList<TagItem> tagList = tags
-        .map(
-          (tag) => TagItem(name: ItemString(tag)),
-        )
-        .toImmutableList();
+    final List<TagItem> tempTagList = [];
+    for (var i = 0; i < tags.length; i++) {
+      final item = TagItem(
+        name: ItemString(tags[i]),
+        id: id +
+            i.toString() +
+            DateTime.now().millisecondsSinceEpoch.toString(),
+      );
+      tempTagList.add(item);
+    }
+    final KtList<TagItem> tagList = tempTagList.toImmutableList();
 
-    final KtList<NoteItem> noteList = notes
-        .map(
-          (noteItem) => noteItem.toDomain,
-        )
-        .toImmutableList();
+    final List<NoteItem> tempNoteList = [];
+    for (var i = 0; i < notes.length; i++) {
+      final item = notes[i].toDomain.copyWith(
+            id: id +
+                i.toString() +
+                DateTime.now().millisecondsSinceEpoch.toString(),
+          );
+      tempNoteList.add(item);
+    }
+    final KtList<NoteItem> noteList = tempNoteList.toImmutableList();
 
     return Note(
       id: id,
@@ -82,12 +93,15 @@ abstract class NoteItemDto with _$NoteItemDto {
   static const String ownerIDKey = "ownerId";
   static const String doneKey = "done";
   static const String nameKey = "name";
+  static const String noteIdKey = "noteId";
 
   const factory NoteItemDto({
     required String id,
     required String name,
     required bool done,
     required String ownerId,
+    required String noteId,
+    @Default(false) bool isInitial,
   }) = _NoteItemDto;
 
   factory NoteItemDto.fromDomain(NoteItem noteItem) {
@@ -96,6 +110,8 @@ abstract class NoteItemDto with _$NoteItemDto {
       name: noteItem.name.getOrCrash(),
       done: noteItem.done,
       ownerId: noteItem.ownerId,
+      noteId: noteItem.id,
+      isInitial: true,
     );
   }
 
@@ -105,6 +121,7 @@ abstract class NoteItemDto with _$NoteItemDto {
       name: ItemString(name),
       done: done,
       ownerId: ownerId,
+      noteId: noteId,
     );
   }
 

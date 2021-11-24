@@ -32,6 +32,12 @@ class _$NoteFailureTearOff {
   _SessionExpired sessionExpired() {
     return const _SessionExpired();
   }
+
+  _ErrorFromServer errorFromServer(String msg) {
+    return _ErrorFromServer(
+      msg,
+    );
+  }
 }
 
 /// @nodoc
@@ -45,6 +51,7 @@ mixin _$NoteFailure {
     required TResult Function() insufficientPermission,
     required TResult Function() unableToUpdate,
     required TResult Function() sessionExpired,
+    required TResult Function(String msg) errorFromServer,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -53,6 +60,7 @@ mixin _$NoteFailure {
     TResult Function()? insufficientPermission,
     TResult Function()? unableToUpdate,
     TResult Function()? sessionExpired,
+    TResult Function(String msg)? errorFromServer,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -61,6 +69,7 @@ mixin _$NoteFailure {
     TResult Function()? insufficientPermission,
     TResult Function()? unableToUpdate,
     TResult Function()? sessionExpired,
+    TResult Function(String msg)? errorFromServer,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -71,6 +80,7 @@ mixin _$NoteFailure {
         insufficientPermission,
     required TResult Function(_UnableToUpdate value) unableToUpdate,
     required TResult Function(_SessionExpired value) sessionExpired,
+    required TResult Function(_ErrorFromServer value) errorFromServer,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -79,6 +89,7 @@ mixin _$NoteFailure {
     TResult Function(_InsufficientPermission value)? insufficientPermission,
     TResult Function(_UnableToUpdate value)? unableToUpdate,
     TResult Function(_SessionExpired value)? sessionExpired,
+    TResult Function(_ErrorFromServer value)? errorFromServer,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -87,6 +98,7 @@ mixin _$NoteFailure {
     TResult Function(_InsufficientPermission value)? insufficientPermission,
     TResult Function(_UnableToUpdate value)? unableToUpdate,
     TResult Function(_SessionExpired value)? sessionExpired,
+    TResult Function(_ErrorFromServer value)? errorFromServer,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -152,6 +164,7 @@ class _$_Unexpected implements _Unexpected {
     required TResult Function() insufficientPermission,
     required TResult Function() unableToUpdate,
     required TResult Function() sessionExpired,
+    required TResult Function(String msg) errorFromServer,
   }) {
     return unexpected();
   }
@@ -163,6 +176,7 @@ class _$_Unexpected implements _Unexpected {
     TResult Function()? insufficientPermission,
     TResult Function()? unableToUpdate,
     TResult Function()? sessionExpired,
+    TResult Function(String msg)? errorFromServer,
   }) {
     return unexpected?.call();
   }
@@ -174,6 +188,7 @@ class _$_Unexpected implements _Unexpected {
     TResult Function()? insufficientPermission,
     TResult Function()? unableToUpdate,
     TResult Function()? sessionExpired,
+    TResult Function(String msg)? errorFromServer,
     required TResult orElse(),
   }) {
     if (unexpected != null) {
@@ -190,6 +205,7 @@ class _$_Unexpected implements _Unexpected {
         insufficientPermission,
     required TResult Function(_UnableToUpdate value) unableToUpdate,
     required TResult Function(_SessionExpired value) sessionExpired,
+    required TResult Function(_ErrorFromServer value) errorFromServer,
   }) {
     return unexpected(this);
   }
@@ -201,6 +217,7 @@ class _$_Unexpected implements _Unexpected {
     TResult Function(_InsufficientPermission value)? insufficientPermission,
     TResult Function(_UnableToUpdate value)? unableToUpdate,
     TResult Function(_SessionExpired value)? sessionExpired,
+    TResult Function(_ErrorFromServer value)? errorFromServer,
   }) {
     return unexpected?.call(this);
   }
@@ -212,6 +229,7 @@ class _$_Unexpected implements _Unexpected {
     TResult Function(_InsufficientPermission value)? insufficientPermission,
     TResult Function(_UnableToUpdate value)? unableToUpdate,
     TResult Function(_SessionExpired value)? sessionExpired,
+    TResult Function(_ErrorFromServer value)? errorFromServer,
     required TResult orElse(),
   }) {
     if (unexpected != null) {
@@ -270,6 +288,7 @@ class _$_InsufficientPermission implements _InsufficientPermission {
     required TResult Function() insufficientPermission,
     required TResult Function() unableToUpdate,
     required TResult Function() sessionExpired,
+    required TResult Function(String msg) errorFromServer,
   }) {
     return insufficientPermission();
   }
@@ -281,6 +300,7 @@ class _$_InsufficientPermission implements _InsufficientPermission {
     TResult Function()? insufficientPermission,
     TResult Function()? unableToUpdate,
     TResult Function()? sessionExpired,
+    TResult Function(String msg)? errorFromServer,
   }) {
     return insufficientPermission?.call();
   }
@@ -292,6 +312,7 @@ class _$_InsufficientPermission implements _InsufficientPermission {
     TResult Function()? insufficientPermission,
     TResult Function()? unableToUpdate,
     TResult Function()? sessionExpired,
+    TResult Function(String msg)? errorFromServer,
     required TResult orElse(),
   }) {
     if (insufficientPermission != null) {
@@ -308,6 +329,7 @@ class _$_InsufficientPermission implements _InsufficientPermission {
         insufficientPermission,
     required TResult Function(_UnableToUpdate value) unableToUpdate,
     required TResult Function(_SessionExpired value) sessionExpired,
+    required TResult Function(_ErrorFromServer value) errorFromServer,
   }) {
     return insufficientPermission(this);
   }
@@ -319,6 +341,7 @@ class _$_InsufficientPermission implements _InsufficientPermission {
     TResult Function(_InsufficientPermission value)? insufficientPermission,
     TResult Function(_UnableToUpdate value)? unableToUpdate,
     TResult Function(_SessionExpired value)? sessionExpired,
+    TResult Function(_ErrorFromServer value)? errorFromServer,
   }) {
     return insufficientPermission?.call(this);
   }
@@ -330,6 +353,7 @@ class _$_InsufficientPermission implements _InsufficientPermission {
     TResult Function(_InsufficientPermission value)? insufficientPermission,
     TResult Function(_UnableToUpdate value)? unableToUpdate,
     TResult Function(_SessionExpired value)? sessionExpired,
+    TResult Function(_ErrorFromServer value)? errorFromServer,
     required TResult orElse(),
   }) {
     if (insufficientPermission != null) {
@@ -388,6 +412,7 @@ class _$_UnableToUpdate implements _UnableToUpdate {
     required TResult Function() insufficientPermission,
     required TResult Function() unableToUpdate,
     required TResult Function() sessionExpired,
+    required TResult Function(String msg) errorFromServer,
   }) {
     return unableToUpdate();
   }
@@ -399,6 +424,7 @@ class _$_UnableToUpdate implements _UnableToUpdate {
     TResult Function()? insufficientPermission,
     TResult Function()? unableToUpdate,
     TResult Function()? sessionExpired,
+    TResult Function(String msg)? errorFromServer,
   }) {
     return unableToUpdate?.call();
   }
@@ -410,6 +436,7 @@ class _$_UnableToUpdate implements _UnableToUpdate {
     TResult Function()? insufficientPermission,
     TResult Function()? unableToUpdate,
     TResult Function()? sessionExpired,
+    TResult Function(String msg)? errorFromServer,
     required TResult orElse(),
   }) {
     if (unableToUpdate != null) {
@@ -426,6 +453,7 @@ class _$_UnableToUpdate implements _UnableToUpdate {
         insufficientPermission,
     required TResult Function(_UnableToUpdate value) unableToUpdate,
     required TResult Function(_SessionExpired value) sessionExpired,
+    required TResult Function(_ErrorFromServer value) errorFromServer,
   }) {
     return unableToUpdate(this);
   }
@@ -437,6 +465,7 @@ class _$_UnableToUpdate implements _UnableToUpdate {
     TResult Function(_InsufficientPermission value)? insufficientPermission,
     TResult Function(_UnableToUpdate value)? unableToUpdate,
     TResult Function(_SessionExpired value)? sessionExpired,
+    TResult Function(_ErrorFromServer value)? errorFromServer,
   }) {
     return unableToUpdate?.call(this);
   }
@@ -448,6 +477,7 @@ class _$_UnableToUpdate implements _UnableToUpdate {
     TResult Function(_InsufficientPermission value)? insufficientPermission,
     TResult Function(_UnableToUpdate value)? unableToUpdate,
     TResult Function(_SessionExpired value)? sessionExpired,
+    TResult Function(_ErrorFromServer value)? errorFromServer,
     required TResult orElse(),
   }) {
     if (unableToUpdate != null) {
@@ -506,6 +536,7 @@ class _$_SessionExpired implements _SessionExpired {
     required TResult Function() insufficientPermission,
     required TResult Function() unableToUpdate,
     required TResult Function() sessionExpired,
+    required TResult Function(String msg) errorFromServer,
   }) {
     return sessionExpired();
   }
@@ -517,6 +548,7 @@ class _$_SessionExpired implements _SessionExpired {
     TResult Function()? insufficientPermission,
     TResult Function()? unableToUpdate,
     TResult Function()? sessionExpired,
+    TResult Function(String msg)? errorFromServer,
   }) {
     return sessionExpired?.call();
   }
@@ -528,6 +560,7 @@ class _$_SessionExpired implements _SessionExpired {
     TResult Function()? insufficientPermission,
     TResult Function()? unableToUpdate,
     TResult Function()? sessionExpired,
+    TResult Function(String msg)? errorFromServer,
     required TResult orElse(),
   }) {
     if (sessionExpired != null) {
@@ -544,6 +577,7 @@ class _$_SessionExpired implements _SessionExpired {
         insufficientPermission,
     required TResult Function(_UnableToUpdate value) unableToUpdate,
     required TResult Function(_SessionExpired value) sessionExpired,
+    required TResult Function(_ErrorFromServer value) errorFromServer,
   }) {
     return sessionExpired(this);
   }
@@ -555,6 +589,7 @@ class _$_SessionExpired implements _SessionExpired {
     TResult Function(_InsufficientPermission value)? insufficientPermission,
     TResult Function(_UnableToUpdate value)? unableToUpdate,
     TResult Function(_SessionExpired value)? sessionExpired,
+    TResult Function(_ErrorFromServer value)? errorFromServer,
   }) {
     return sessionExpired?.call(this);
   }
@@ -566,6 +601,7 @@ class _$_SessionExpired implements _SessionExpired {
     TResult Function(_InsufficientPermission value)? insufficientPermission,
     TResult Function(_UnableToUpdate value)? unableToUpdate,
     TResult Function(_SessionExpired value)? sessionExpired,
+    TResult Function(_ErrorFromServer value)? errorFromServer,
     required TResult orElse(),
   }) {
     if (sessionExpired != null) {
@@ -577,4 +613,156 @@ class _$_SessionExpired implements _SessionExpired {
 
 abstract class _SessionExpired implements NoteFailure {
   const factory _SessionExpired() = _$_SessionExpired;
+}
+
+/// @nodoc
+abstract class _$ErrorFromServerCopyWith<$Res> {
+  factory _$ErrorFromServerCopyWith(
+          _ErrorFromServer value, $Res Function(_ErrorFromServer) then) =
+      __$ErrorFromServerCopyWithImpl<$Res>;
+  $Res call({String msg});
+}
+
+/// @nodoc
+class __$ErrorFromServerCopyWithImpl<$Res>
+    extends _$NoteFailureCopyWithImpl<$Res>
+    implements _$ErrorFromServerCopyWith<$Res> {
+  __$ErrorFromServerCopyWithImpl(
+      _ErrorFromServer _value, $Res Function(_ErrorFromServer) _then)
+      : super(_value, (v) => _then(v as _ErrorFromServer));
+
+  @override
+  _ErrorFromServer get _value => super._value as _ErrorFromServer;
+
+  @override
+  $Res call({
+    Object? msg = freezed,
+  }) {
+    return _then(_ErrorFromServer(
+      msg == freezed
+          ? _value.msg
+          : msg // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_ErrorFromServer implements _ErrorFromServer {
+  const _$_ErrorFromServer(this.msg);
+
+  @override
+  final String msg;
+
+  @override
+  String toString() {
+    return 'NoteFailure.errorFromServer(msg: $msg)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _ErrorFromServer &&
+            (identical(other.msg, msg) || other.msg == msg));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, msg);
+
+  @JsonKey(ignore: true)
+  @override
+  _$ErrorFromServerCopyWith<_ErrorFromServer> get copyWith =>
+      __$ErrorFromServerCopyWithImpl<_ErrorFromServer>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() unexpected,
+    required TResult Function() insufficientPermission,
+    required TResult Function() unableToUpdate,
+    required TResult Function() sessionExpired,
+    required TResult Function(String msg) errorFromServer,
+  }) {
+    return errorFromServer(msg);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? unexpected,
+    TResult Function()? insufficientPermission,
+    TResult Function()? unableToUpdate,
+    TResult Function()? sessionExpired,
+    TResult Function(String msg)? errorFromServer,
+  }) {
+    return errorFromServer?.call(msg);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? unexpected,
+    TResult Function()? insufficientPermission,
+    TResult Function()? unableToUpdate,
+    TResult Function()? sessionExpired,
+    TResult Function(String msg)? errorFromServer,
+    required TResult orElse(),
+  }) {
+    if (errorFromServer != null) {
+      return errorFromServer(msg);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Unexpected value) unexpected,
+    required TResult Function(_InsufficientPermission value)
+        insufficientPermission,
+    required TResult Function(_UnableToUpdate value) unableToUpdate,
+    required TResult Function(_SessionExpired value) sessionExpired,
+    required TResult Function(_ErrorFromServer value) errorFromServer,
+  }) {
+    return errorFromServer(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Unexpected value)? unexpected,
+    TResult Function(_InsufficientPermission value)? insufficientPermission,
+    TResult Function(_UnableToUpdate value)? unableToUpdate,
+    TResult Function(_SessionExpired value)? sessionExpired,
+    TResult Function(_ErrorFromServer value)? errorFromServer,
+  }) {
+    return errorFromServer?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Unexpected value)? unexpected,
+    TResult Function(_InsufficientPermission value)? insufficientPermission,
+    TResult Function(_UnableToUpdate value)? unableToUpdate,
+    TResult Function(_SessionExpired value)? sessionExpired,
+    TResult Function(_ErrorFromServer value)? errorFromServer,
+    required TResult orElse(),
+  }) {
+    if (errorFromServer != null) {
+      return errorFromServer(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _ErrorFromServer implements NoteFailure {
+  const factory _ErrorFromServer(String msg) = _$_ErrorFromServer;
+
+  String get msg;
+  @JsonKey(ignore: true)
+  _$ErrorFromServerCopyWith<_ErrorFromServer> get copyWith =>
+      throw _privateConstructorUsedError;
 }

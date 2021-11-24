@@ -21,12 +21,14 @@ class _$NoteItemTearOff {
       {required String id,
       required ItemString name,
       required bool done,
-      required String ownerId}) {
+      required String ownerId,
+      required String noteId}) {
     return _NoteItem(
       id: id,
       name: name,
       done: done,
       ownerId: ownerId,
+      noteId: noteId,
     );
   }
 }
@@ -40,6 +42,7 @@ mixin _$NoteItem {
   ItemString get name => throw _privateConstructorUsedError;
   bool get done => throw _privateConstructorUsedError;
   String get ownerId => throw _privateConstructorUsedError;
+  String get noteId => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $NoteItemCopyWith<NoteItem> get copyWith =>
@@ -50,7 +53,8 @@ mixin _$NoteItem {
 abstract class $NoteItemCopyWith<$Res> {
   factory $NoteItemCopyWith(NoteItem value, $Res Function(NoteItem) then) =
       _$NoteItemCopyWithImpl<$Res>;
-  $Res call({String id, ItemString name, bool done, String ownerId});
+  $Res call(
+      {String id, ItemString name, bool done, String ownerId, String noteId});
 }
 
 /// @nodoc
@@ -67,6 +71,7 @@ class _$NoteItemCopyWithImpl<$Res> implements $NoteItemCopyWith<$Res> {
     Object? name = freezed,
     Object? done = freezed,
     Object? ownerId = freezed,
+    Object? noteId = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -85,6 +90,10 @@ class _$NoteItemCopyWithImpl<$Res> implements $NoteItemCopyWith<$Res> {
           ? _value.ownerId
           : ownerId // ignore: cast_nullable_to_non_nullable
               as String,
+      noteId: noteId == freezed
+          ? _value.noteId
+          : noteId // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -94,7 +103,8 @@ abstract class _$NoteItemCopyWith<$Res> implements $NoteItemCopyWith<$Res> {
   factory _$NoteItemCopyWith(_NoteItem value, $Res Function(_NoteItem) then) =
       __$NoteItemCopyWithImpl<$Res>;
   @override
-  $Res call({String id, ItemString name, bool done, String ownerId});
+  $Res call(
+      {String id, ItemString name, bool done, String ownerId, String noteId});
 }
 
 /// @nodoc
@@ -112,6 +122,7 @@ class __$NoteItemCopyWithImpl<$Res> extends _$NoteItemCopyWithImpl<$Res>
     Object? name = freezed,
     Object? done = freezed,
     Object? ownerId = freezed,
+    Object? noteId = freezed,
   }) {
     return _then(_NoteItem(
       id: id == freezed
@@ -130,6 +141,10 @@ class __$NoteItemCopyWithImpl<$Res> extends _$NoteItemCopyWithImpl<$Res>
           ? _value.ownerId
           : ownerId // ignore: cast_nullable_to_non_nullable
               as String,
+      noteId: noteId == freezed
+          ? _value.noteId
+          : noteId // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -141,7 +156,8 @@ class _$_NoteItem extends _NoteItem {
       {required this.id,
       required this.name,
       required this.done,
-      required this.ownerId})
+      required this.ownerId,
+      required this.noteId})
       : super._();
 
   @override
@@ -152,10 +168,12 @@ class _$_NoteItem extends _NoteItem {
   final bool done;
   @override
   final String ownerId;
+  @override
+  final String noteId;
 
   @override
   String toString() {
-    return 'NoteItem(id: $id, name: $name, done: $done, ownerId: $ownerId)';
+    return 'NoteItem(id: $id, name: $name, done: $done, ownerId: $ownerId, noteId: $noteId)';
   }
 
   @override
@@ -166,11 +184,12 @@ class _$_NoteItem extends _NoteItem {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.done, done) || other.done == done) &&
-            (identical(other.ownerId, ownerId) || other.ownerId == ownerId));
+            (identical(other.ownerId, ownerId) || other.ownerId == ownerId) &&
+            (identical(other.noteId, noteId) || other.noteId == noteId));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, done, ownerId);
+  int get hashCode => Object.hash(runtimeType, id, name, done, ownerId, noteId);
 
   @JsonKey(ignore: true)
   @override
@@ -183,7 +202,8 @@ abstract class _NoteItem extends NoteItem {
       {required String id,
       required ItemString name,
       required bool done,
-      required String ownerId}) = _$_NoteItem;
+      required String ownerId,
+      required String noteId}) = _$_NoteItem;
   const _NoteItem._() : super._();
 
   @override
@@ -194,6 +214,8 @@ abstract class _NoteItem extends NoteItem {
   bool get done;
   @override
   String get ownerId;
+  @override
+  String get noteId;
   @override
   @JsonKey(ignore: true)
   _$NoteItemCopyWith<_NoteItem> get copyWith =>

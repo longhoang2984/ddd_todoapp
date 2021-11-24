@@ -17,39 +17,99 @@ class NoteRepository extends INoteRepository {
 
   @override
   Future<Either<NoteFailure, Unit>> create(Note note) async {
-    final noteItem =
-        await ParseObjectX.objectByCurrentUser(NoteItemDto.tableKey);
-    noteItem.set(NoteItemDto.doneKey, false);
-    noteItem.set(NoteItemDto.nameKey, "abc");
-    await noteItem.save();
+    try {
+      final noteDto = NoteDto.fromDomain(note);
+      final noteObject =
+          await ParseObjectX.objectByCurrentUser(NoteDto.tableKey);
+      noteObject.set(NoteDto.tagsKey, noteDto.tags);
+      noteObject.set(NoteDto.titleKey, noteDto.title);
+      final noteResponse = await noteObject.save();
 
-    final noteItem2 =
-        await ParseObjectX.objectByCurrentUser(NoteItemDto.tableKey);
-    noteItem2.set(NoteItemDto.doneKey, false);
-    noteItem2.set(NoteItemDto.nameKey, "def");
-    await noteItem2.save();
+      final createNoteError = noteResponse.error;
+      if (createNoteError != null) {
+        return left(
+          NoteFailure.errorFromServer(createNoteError.message),
+        );
+      }
 
-    final note = await ParseObjectX.objectByCurrentUser(NoteDto.tableKey);
-    note.set(NoteDto.tagsKey, ["abc, def"]);
-    note.addRelation("noteItems", [
-      ParseObject(NoteItemDto.tableKey)..set("objectId", noteItem.objectId),
-      ParseObject(NoteItemDto.tableKey)..set("objectId", noteItem2.objectId)
-    ]);
-    await note.save();
+      for (final noteItem in noteDto.notes) {
+        final noteItemObject =
+            await ParseObjectX.objectByCurrentUser(NoteItemDto.tableKey);
+        noteItemObject.set(NoteItemDto.doneKey, noteItem.done);
+        noteItemObject.set(NoteItemDto.nameKey, noteItem.name);
+        noteItemObject.set(NoteItemDto.noteIdKey, noteObject);
+        await noteItemObject.save();
+      }
 
-    return right(unit);
+      return right(unit);
+    } catch (err) {
+      return left(const NoteFailure.unexpected());
+    }
   }
 
   @override
-  Future<Either<NoteFailure, Unit>> delete(Note note) {
-    // TODO: implement delete
-    throw UnimplementedError();
+  Future<Either<NoteFailure, Unit>> delete(Note note) async {
+    try {
+      final noteDto = NoteDto.fromDomain(note);
+      final noteObject =
+          await ParseObjectX.objectByCurrentUser(NoteDto.tableKey);
+      noteObject.objectId = noteDto.id;
+      final noteResponse = await noteObject.delete();
+
+      final updateNoteError = noteResponse.error;
+      if (updateNoteError != null) {
+        return left(
+          NoteFailure.errorFromServer(updateNoteError.message),
+        );
+      }
+
+      for (final noteItem in noteDto.notes) {
+        final noteItemObject =
+            await ParseObjectX.objectByCurrentUser(NoteItemDto.tableKey);
+        noteItemObject.objectId = noteItem.id;
+        await noteItemObject.delete();
+      }
+
+      return right(unit);
+    } catch (err) {
+      return left(const NoteFailure.unexpected());
+    }
   }
 
   @override
-  Future<Either<NoteFailure, Unit>> update(Note note) {
-    // TODO: implement update
-    throw UnimplementedError();
+  Future<Either<NoteFailure, Unit>> update(Note note) async {
+    try {
+      final noteDto = NoteDto.fromDomain(note);
+      final noteObject =
+          await ParseObjectX.objectByCurrentUser(NoteDto.tableKey);
+      noteObject.objectId = noteDto.id;
+      noteObject.set(NoteDto.tagsKey, noteDto.tags);
+      noteObject.set(NoteDto.titleKey, noteDto.title);
+      final noteResponse = await noteObject.save();
+
+      final updateNoteError = noteResponse.error;
+      if (updateNoteError != null) {
+        return left(
+          NoteFailure.errorFromServer(updateNoteError.message),
+        );
+      }
+
+      for (final noteItem in noteDto.notes) {
+        final noteItemObject =
+            await ParseObjectX.objectByCurrentUser(NoteItemDto.tableKey);
+        if (noteItem.id.isNotEmpty && !noteItem.isInitial) {
+          noteItemObject.objectId = noteItem.id;
+        }
+        noteItemObject.set(NoteItemDto.doneKey, noteItem.done);
+        noteItemObject.set(NoteItemDto.nameKey, noteItem.name);
+        noteItemObject.set(NoteItemDto.noteIdKey, noteObject);
+        await noteItemObject.save();
+      }
+
+      return right(unit);
+    } catch (err) {
+      return left(const NoteFailure.unexpected());
+    }
   }
 
   @override
@@ -59,29 +119,33 @@ class NoteRepository extends INoteRepository {
       return left(const NoteFailure.sessionExpired());
     }
     try {
-      final notesQuery =
-          QueryBuilder<ParseObject>(ParseObject(NoteDto.tableKey))
-            ..whereEqualTo(
-              NoteDto.ownerIDKey,
-              userId,
-            );
+      final notesQuery = await queryBuilderByCurrentUser(NoteDto.tableKey)
+        ..orderByDescending('updatedAt');
       final ParseResponse notes = await notesQuery.query();
 
       if (!notes.success && notes.results != null) {
         return left(const NoteFailure.unexpected());
       }
-
+      if (notes.count == 0) {
+        return right(emptyList());
+      }
       final List<NoteDto> noteList = [];
       for (final note in notes.results! as List<ParseObject>) {
         final QueryBuilder<ParseObject> noteItemsQuery =
-            QueryBuilder<ParseObject>(ParseObject(NoteItemDto.tableKey))
-              ..whereRelatedTo("noteItems", NoteDto.tableKey, note.objectId!);
+            await queryBuilderByCurrentUser(NoteItemDto.tableKey)
+              ..whereEqualTo(
+                NoteItemDto.noteIdKey,
+                (ParseObject(NoteDto.tableKey)..objectId = note.objectId)
+                    .toPointer(),
+              );
         final items = await noteItemsQuery.query();
         final List<NoteItemDto> noteItemList = [];
-        for (final item in items.results! as List<ParseObject>) {
-          final noteItemDto = item.toNoteItemDto();
-          if (noteItemDto != null) {
-            noteItemList.add(noteItemDto);
+        if (items.count != 0) {
+          for (final item in items.results! as List<ParseObject>) {
+            final noteItemDto = item.toNoteItemDto();
+            if (noteItemDto != null) {
+              noteItemList.add(noteItemDto);
+            }
           }
         }
         final noteDto = note.toNoteDto(noteItemList);
@@ -97,9 +161,57 @@ class NoteRepository extends INoteRepository {
   }
 
   @override
-  Future<Either<NoteFailure, KtList<Note>>> watchUncompleted() {
-    // TODO: implement watchUncompleted
-    throw UnimplementedError();
+  Future<Either<NoteFailure, KtList<Note>>> watchUncompleted() async {
+    final userId = await _getUserId();
+    if (userId.isEmpty) {
+      return left(const NoteFailure.sessionExpired());
+    }
+    try {
+      final notesQuery = await queryBuilderByCurrentUser(NoteDto.tableKey)
+        ..orderByDescending('updatedAt');
+      final ParseResponse notes = await notesQuery.query();
+
+      if (!notes.success && notes.results != null) {
+        return left(const NoteFailure.unexpected());
+      }
+
+      if (notes.count == 0) {
+        return right(emptyList());
+      }
+
+      final List<NoteDto> noteList = [];
+      for (final note in notes.results! as List<ParseObject>) {
+        final QueryBuilder<ParseObject> noteItemsQuery =
+            await queryBuilderByCurrentUser(NoteItemDto.tableKey)
+              ..whereEqualTo(
+                NoteItemDto.noteIdKey,
+                (ParseObject(NoteDto.tableKey)..objectId = note.objectId)
+                    .toPointer(),
+              );
+        final items = await noteItemsQuery.query();
+        final List<NoteItemDto> noteItemList = [];
+        bool isUncomplete = true;
+        if (items.count != 0) {
+          for (final item in items.results! as List<ParseObject>) {
+            final noteItemDto = item.toNoteItemDto();
+            if (noteItemDto != null) {
+              noteItemList.add(noteItemDto);
+              if (noteItemDto.done) {
+                isUncomplete = false;
+              }
+            }
+          }
+        }
+        final noteDto = note.toNoteDto(noteItemList);
+        if (noteDto != null && isUncomplete) {
+          noteList.add(noteDto);
+        }
+      }
+
+      return right(noteList.map((e) => e.toDomain).toImmutableList());
+    } catch (e) {
+      return left(const NoteFailure.unexpected());
+    }
   }
 
   Future<String> _getUserId() async {

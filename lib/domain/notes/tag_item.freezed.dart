@@ -17,9 +17,10 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$TagItemTearOff {
   const _$TagItemTearOff();
 
-  _TagItem call({required ItemString name}) {
+  _TagItem call({required ItemString name, required String id}) {
     return _TagItem(
       name: name,
+      id: id,
     );
   }
 }
@@ -30,6 +31,7 @@ const $TagItem = _$TagItemTearOff();
 /// @nodoc
 mixin _$TagItem {
   ItemString get name => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $TagItemCopyWith<TagItem> get copyWith => throw _privateConstructorUsedError;
@@ -39,7 +41,7 @@ mixin _$TagItem {
 abstract class $TagItemCopyWith<$Res> {
   factory $TagItemCopyWith(TagItem value, $Res Function(TagItem) then) =
       _$TagItemCopyWithImpl<$Res>;
-  $Res call({ItemString name});
+  $Res call({ItemString name, String id});
 }
 
 /// @nodoc
@@ -53,12 +55,17 @@ class _$TagItemCopyWithImpl<$Res> implements $TagItemCopyWith<$Res> {
   @override
   $Res call({
     Object? name = freezed,
+    Object? id = freezed,
   }) {
     return _then(_value.copyWith(
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as ItemString,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -68,7 +75,7 @@ abstract class _$TagItemCopyWith<$Res> implements $TagItemCopyWith<$Res> {
   factory _$TagItemCopyWith(_TagItem value, $Res Function(_TagItem) then) =
       __$TagItemCopyWithImpl<$Res>;
   @override
-  $Res call({ItemString name});
+  $Res call({ItemString name, String id});
 }
 
 /// @nodoc
@@ -83,12 +90,17 @@ class __$TagItemCopyWithImpl<$Res> extends _$TagItemCopyWithImpl<$Res>
   @override
   $Res call({
     Object? name = freezed,
+    Object? id = freezed,
   }) {
     return _then(_TagItem(
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as ItemString,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -96,14 +108,16 @@ class __$TagItemCopyWithImpl<$Res> extends _$TagItemCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_TagItem extends _TagItem {
-  const _$_TagItem({required this.name}) : super._();
+  const _$_TagItem({required this.name, required this.id}) : super._();
 
   @override
   final ItemString name;
+  @override
+  final String id;
 
   @override
   String toString() {
-    return 'TagItem(name: $name)';
+    return 'TagItem(name: $name, id: $id)';
   }
 
   @override
@@ -111,11 +125,12 @@ class _$_TagItem extends _TagItem {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _TagItem &&
-            (identical(other.name, name) || other.name == name));
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.id, id) || other.id == id));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, name);
+  int get hashCode => Object.hash(runtimeType, name, id);
 
   @JsonKey(ignore: true)
   @override
@@ -124,11 +139,14 @@ class _$_TagItem extends _TagItem {
 }
 
 abstract class _TagItem extends TagItem {
-  const factory _TagItem({required ItemString name}) = _$_TagItem;
+  const factory _TagItem({required ItemString name, required String id}) =
+      _$_TagItem;
   const _TagItem._() : super._();
 
   @override
   ItemString get name;
+  @override
+  String get id;
   @override
   @JsonKey(ignore: true)
   _$TagItemCopyWith<_TagItem> get copyWith =>

@@ -31,6 +31,8 @@ _$_NoteItemDto _$$_NoteItemDtoFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String,
       done: json['done'] as bool,
       ownerId: json['ownerId'] as String,
+      noteId: json['noteId'] as String,
+      isInitial: json['isInitial'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$_NoteItemDtoToJson(_$_NoteItemDto instance) =>
@@ -39,4 +41,6 @@ Map<String, dynamic> _$$_NoteItemDtoToJson(_$_NoteItemDto instance) =>
       'name': instance.name,
       'done': instance.done,
       'ownerId': instance.ownerId,
+      'noteId': instance.noteId,
+      'isInitial': instance.isInitial,
     };

@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
         title: 'Ice Cream Todo',
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
+        debugShowCheckedModeBanner: false,
         locale: context.locale,
         theme: ThemeData(
           primarySwatch: Colors.blue,

@@ -266,12 +266,16 @@ class _$NoteItemDtoTearOff {
       {required String id,
       required String name,
       required bool done,
-      required String ownerId}) {
+      required String ownerId,
+      required String noteId,
+      bool isInitial = false}) {
     return _NoteItemDto(
       id: id,
       name: name,
       done: done,
       ownerId: ownerId,
+      noteId: noteId,
+      isInitial: isInitial,
     );
   }
 
@@ -289,6 +293,8 @@ mixin _$NoteItemDto {
   String get name => throw _privateConstructorUsedError;
   bool get done => throw _privateConstructorUsedError;
   String get ownerId => throw _privateConstructorUsedError;
+  String get noteId => throw _privateConstructorUsedError;
+  bool get isInitial => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -301,7 +307,13 @@ abstract class $NoteItemDtoCopyWith<$Res> {
   factory $NoteItemDtoCopyWith(
           NoteItemDto value, $Res Function(NoteItemDto) then) =
       _$NoteItemDtoCopyWithImpl<$Res>;
-  $Res call({String id, String name, bool done, String ownerId});
+  $Res call(
+      {String id,
+      String name,
+      bool done,
+      String ownerId,
+      String noteId,
+      bool isInitial});
 }
 
 /// @nodoc
@@ -318,6 +330,8 @@ class _$NoteItemDtoCopyWithImpl<$Res> implements $NoteItemDtoCopyWith<$Res> {
     Object? name = freezed,
     Object? done = freezed,
     Object? ownerId = freezed,
+    Object? noteId = freezed,
+    Object? isInitial = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -336,6 +350,14 @@ class _$NoteItemDtoCopyWithImpl<$Res> implements $NoteItemDtoCopyWith<$Res> {
           ? _value.ownerId
           : ownerId // ignore: cast_nullable_to_non_nullable
               as String,
+      noteId: noteId == freezed
+          ? _value.noteId
+          : noteId // ignore: cast_nullable_to_non_nullable
+              as String,
+      isInitial: isInitial == freezed
+          ? _value.isInitial
+          : isInitial // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -347,7 +369,13 @@ abstract class _$NoteItemDtoCopyWith<$Res>
           _NoteItemDto value, $Res Function(_NoteItemDto) then) =
       __$NoteItemDtoCopyWithImpl<$Res>;
   @override
-  $Res call({String id, String name, bool done, String ownerId});
+  $Res call(
+      {String id,
+      String name,
+      bool done,
+      String ownerId,
+      String noteId,
+      bool isInitial});
 }
 
 /// @nodoc
@@ -366,6 +394,8 @@ class __$NoteItemDtoCopyWithImpl<$Res> extends _$NoteItemDtoCopyWithImpl<$Res>
     Object? name = freezed,
     Object? done = freezed,
     Object? ownerId = freezed,
+    Object? noteId = freezed,
+    Object? isInitial = freezed,
   }) {
     return _then(_NoteItemDto(
       id: id == freezed
@@ -384,6 +414,14 @@ class __$NoteItemDtoCopyWithImpl<$Res> extends _$NoteItemDtoCopyWithImpl<$Res>
           ? _value.ownerId
           : ownerId // ignore: cast_nullable_to_non_nullable
               as String,
+      noteId: noteId == freezed
+          ? _value.noteId
+          : noteId // ignore: cast_nullable_to_non_nullable
+              as String,
+      isInitial: isInitial == freezed
+          ? _value.isInitial
+          : isInitial // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -395,7 +433,9 @@ class _$_NoteItemDto extends _NoteItemDto {
       {required this.id,
       required this.name,
       required this.done,
-      required this.ownerId})
+      required this.ownerId,
+      required this.noteId,
+      this.isInitial = false})
       : super._();
 
   factory _$_NoteItemDto.fromJson(Map<String, dynamic> json) =>
@@ -409,10 +449,15 @@ class _$_NoteItemDto extends _NoteItemDto {
   final bool done;
   @override
   final String ownerId;
+  @override
+  final String noteId;
+  @JsonKey(defaultValue: false)
+  @override
+  final bool isInitial;
 
   @override
   String toString() {
-    return 'NoteItemDto(id: $id, name: $name, done: $done, ownerId: $ownerId)';
+    return 'NoteItemDto(id: $id, name: $name, done: $done, ownerId: $ownerId, noteId: $noteId, isInitial: $isInitial)';
   }
 
   @override
@@ -423,11 +468,15 @@ class _$_NoteItemDto extends _NoteItemDto {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.done, done) || other.done == done) &&
-            (identical(other.ownerId, ownerId) || other.ownerId == ownerId));
+            (identical(other.ownerId, ownerId) || other.ownerId == ownerId) &&
+            (identical(other.noteId, noteId) || other.noteId == noteId) &&
+            (identical(other.isInitial, isInitial) ||
+                other.isInitial == isInitial));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, done, ownerId);
+  int get hashCode =>
+      Object.hash(runtimeType, id, name, done, ownerId, noteId, isInitial);
 
   @JsonKey(ignore: true)
   @override
@@ -445,7 +494,9 @@ abstract class _NoteItemDto extends NoteItemDto {
       {required String id,
       required String name,
       required bool done,
-      required String ownerId}) = _$_NoteItemDto;
+      required String ownerId,
+      required String noteId,
+      bool isInitial}) = _$_NoteItemDto;
   const _NoteItemDto._() : super._();
 
   factory _NoteItemDto.fromJson(Map<String, dynamic> json) =
@@ -459,6 +510,10 @@ abstract class _NoteItemDto extends NoteItemDto {
   bool get done;
   @override
   String get ownerId;
+  @override
+  String get noteId;
+  @override
+  bool get isInitial;
   @override
   @JsonKey(ignore: true)
   _$NoteItemDtoCopyWith<_NoteItemDto> get copyWith =>

@@ -11,10 +11,12 @@ abstract class TagItem implements _$TagItem {
 
   const factory TagItem({
     required ItemString name,
+    required String id,
   }) = _TagItem;
 
   factory TagItem.emtpy() => TagItem(
         name: ItemString(''),
+        id: DateTime.now().microsecondsSinceEpoch.toString(),
       );
 
   Option<ValueFailure<dynamic>> get failureOption {

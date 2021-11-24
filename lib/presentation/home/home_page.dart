@@ -44,7 +44,7 @@ class HomePage extends StatelessWidget {
               listener: (context, state) {},
             ),
           ],
-          child: const NotesList(),
+          child: const NoteBody(),
         ),
       ),
     );

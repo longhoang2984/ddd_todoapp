@@ -20,7 +20,18 @@ class CodegenLoader extends AssetLoader{
   "email_address": "Email Address",
   "enter_your_password": "Enter your password",
   "enter_your_email": "Enter your email (example@mail.com)",
-  "password": "password"
+  "password": "password",
+  "notes": "Notes",
+  "add_note": "Add Note",
+  "edit_note": "Edit note",
+  "some_thing_wrong": "Something went wrong",
+  "only_uncompleted": "Show only uncompleted note",
+  "enter_title": "Enter Title",
+  "add_tags": "Add Tags",
+  "add_sub_notes": "Add Sub-Notes",
+  "save": "Save",
+  "update": "Update",
+  "delete": "Delete"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en_US": en_US};
 }

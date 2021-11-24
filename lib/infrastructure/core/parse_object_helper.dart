@@ -16,11 +16,16 @@ extension ParseObjectX on ParseObject {
     if (objectId == null) {
       return null;
     }
+    final noteId = get<ParseObject>(NoteItemDto.noteIdKey)?.objectId;
+    if (noteId == null) {
+      return null;
+    }
     return NoteItemDto(
       id: objectId!,
       name: get(NoteItemDto.nameKey).toString(),
       done: get<bool>(NoteItemDto.doneKey) ?? false,
       ownerId: get<String>(NoteItemDto.ownerIDKey) ?? '',
+      noteId: noteId,
     );
   }
 
@@ -40,15 +45,13 @@ extension ParseObjectX on ParseObject {
   }
 }
 
-extension QueryBuilderX on QueryBuilder {
-  static Future<QueryBuilder<ParseObject>> queryBuilderByCurrentUser(
-    String key,
-  ) async {
-    final userOption = await getIt<IAuthFacade>().getCurrentUser();
-    final user = userOption.getOrElse(() => throw NotAuthenticatedError());
-    final String userId = user.id;
-    final parsedQuery = QueryBuilder(ParseObject(key))
-      ..whereEqualTo(NoteDto.ownerIDKey, userId);
-    return parsedQuery;
-  }
+Future<QueryBuilder<ParseObject>> queryBuilderByCurrentUser(
+  String key,
+) async {
+  final userOption = await getIt<IAuthFacade>().getCurrentUser();
+  final user = userOption.getOrElse(() => throw NotAuthenticatedError());
+  final String userId = user.id;
+  final parsedQuery = QueryBuilder(ParseObject(key))
+    ..whereEqualTo(NoteDto.ownerIDKey, userId);
+  return parsedQuery;
 }
