@@ -1,5 +1,13 @@
 # Domain-Driven Design + [Parse Server](https://www.back4app.com)
 
+Install Parse SDK on [Flutter project](https://www.youtube.com/watch?v=RMiN59x3uH0&list=PLB6lc7nQ1n4iS5p-IezFFgqP6YvAJy84U&index=1)
+
+and then update `.env` file
+
+```
+PARSE_APPLICATION_ID=YOUR_APP_ID_HERE
+PARSE_CLIENT_KEY=YOUR_CLIENT_KEY_HERE
+```
 
 #### The project inspire by [resocoder.com](https://resocoder.com)_
 
