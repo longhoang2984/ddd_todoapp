@@ -1,29 +1,22 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:icecream_todo/application/auth/register_form/register_form_bloc.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:icecream_todo/gen/assets.gen.dart';
 import 'package:icecream_todo/gen/colors.gen.dart';
 import 'package:icecream_todo/generated/locale_keys.g.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:icecream_todo/presentation/core/utils/base_text_style.dart';
 import 'package:icecream_todo/presentation/core/utils/under_line_text_field.dart';
 
-class PasswordField extends StatefulWidget {
+class PasswordField extends HookWidget {
+  const PasswordField({Key? key, this.onChanged, this.validator})
+      : super(key: key);
   final Function(String)? onChanged;
   final String? Function(String?)? validator;
 
-  const PasswordField({Key? key, this.onChanged, this.validator})
-      : super(key: key);
-
-  @override
-  _PasswordFieldState createState() => _PasswordFieldState();
-}
-
-class _PasswordFieldState extends State<PasswordField> {
-  bool showPassword = false;
-
   @override
   Widget build(BuildContext context) {
+    final showPasswordState = useState(false);
+
     return TextFormField(
       decoration: InputDecoration(
         floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -48,16 +41,15 @@ class _PasswordFieldState extends State<PasswordField> {
         errorBorder: getUnderLineBorder(ColorName.contextualError),
         suffixIcon: GestureDetector(
           onTap: () {
-            setState(() {
-              showPassword = !showPassword;
-            });
+            showPasswordState.value = !showPasswordState.value;
           },
           child: Container(
             padding: const EdgeInsets.only(top: 10.0),
             height: 40.0,
-            child:
-                (showPassword ? Assets.images.icHidePw : Assets.images.icShowPw)
-                    .image(),
+            child: (showPasswordState.value
+                    ? Assets.images.icHidePw
+                    : Assets.images.icShowPw)
+                .image(),
           ),
         ),
       ),
@@ -65,9 +57,9 @@ class _PasswordFieldState extends State<PasswordField> {
       style: BaseTextStyle.style(
         fontSize: 16.0,
       ),
-      obscureText: !showPassword,
-      onChanged: widget.onChanged,
-      validator: widget.validator,
+      obscureText: !showPasswordState.value,
+      onChanged: onChanged,
+      validator: validator,
     );
   }
 }

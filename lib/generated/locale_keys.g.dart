@@ -18,5 +18,13 @@ abstract class  LocaleKeys {
   static const save = 'save';
   static const update = 'update';
   static const delete = 'delete';
+  static const too_long = 'too_long';
+  static const cannot_be_empty = 'cannot_be_empty';
+  static const has_single_line = 'has_single_line';
+  static const do_you_want_to_delete = 'do_you_want_to_delete';
+  static const cancel = 'cancel';
+  static const short_password = 'short_password';
+  static const invalid_email = 'invalid_email';
+  static const email_existed = 'email_existed';
 
 }

@@ -15,5 +15,13 @@
     "add_sub_notes": "Add Sub-Notes",
     "save": "Save",
     "update": "Update",
-    "delete": "Delete"
+    "delete": "Delete",
+    "too_long": "Too long",
+    "cannot_be_empty": "Cannot be empty",
+    "has_single_line": "Has to be in a single line",
+    "do_you_want_to_delete": "Do you want to delete {}?",
+    "cancel": "Cancel",
+    "short_password": "Password at least 6 characters",
+    "invalid_email": "Invalid Email",
+    "email_existed": "Account already exists for this email"
 }

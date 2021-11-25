@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_hud/flutter_hud.dart';
 import 'package:icecream_todo/application/note/note_form/note_form_bloc.dart';
 import 'package:icecream_todo/gen/assets.gen.dart';
 import 'package:icecream_todo/gen/colors.gen.dart';
@@ -11,7 +12,6 @@ import 'package:icecream_todo/generated/locale_keys.g.dart';
 import 'package:icecream_todo/presentation/core/gradient_view.dart';
 import 'package:icecream_todo/presentation/core/utils/base_text_style.dart';
 import 'package:icecream_todo/presentation/core/utils/show_error.dart';
-import 'package:icecream_todo/presentation/core/utils/under_line_text_field.dart';
 import 'package:icecream_todo/presentation/note_form/widgets/add_sub_notes_tile.dart';
 import 'package:icecream_todo/presentation/note_form/widgets/add_tag_tile.dart';
 import 'package:icecream_todo/presentation/note_form/widgets/note_title_field.dart';
@@ -20,7 +20,7 @@ import 'package:icecream_todo/presentation/note_form/widgets/tag_list.dart';
 import 'package:provider/provider.dart';
 
 class NoteFormBody extends StatelessWidget {
-  NoteFormBody({Key? key, this.onNoteChanged}) : super(key: key);
+  const NoteFormBody({Key? key, this.onNoteChanged}) : super(key: key);
   final Function()? onNoteChanged;
 
   @override
@@ -60,110 +60,115 @@ class NoteFormBody extends StatelessWidget {
       buildWhen: (p, c) =>
           p.isSaving != c.isSaving || p.isEditing != c.isEditing,
       builder: (context, state) {
-        return MultiProvider(
-          providers: [
-            ChangeNotifierProvider(
-              create: (_) => FormTags(),
-            ),
-            ChangeNotifierProvider(
-              create: (_) => FormSubNotes(),
-            ),
-          ],
-          child: Form(
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            child: Column(
-              children: [
-                Container(
-                  padding: const EdgeInsets.only(
-                    top: 70.0,
-                    left: 48.0,
-                  ),
-                  width: double.infinity,
-                  child: Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          context.router.pop();
-                        },
-                        child: Assets.images.icBack.image(
-                          height: 16.0,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 15.0,
-                      ),
-                      Text(
-                        state.isEditing
-                            ? LocaleKeys.edit_note
-                            : LocaleKeys.add_note,
-                        style: BaseTextStyle.style(
-                          style: FontStyle.extrabold,
-                          fontSize: 18.0,
-                        ),
-                      ).tr(),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Stack(
-                    children: [
-                      Positioned.fill(
-                        child: Container(
-                          padding: const EdgeInsets.only(
-                            top: 10.0,
-                            left: 48.0,
-                            bottom: 40.0,
-                            right: 8.0,
-                          ),
-                          child: SingleChildScrollView(
-                            child: Column(
-                              children: const [
-                                SizedBox(
-                                  height: 20.0,
-                                ),
-                                NoteTitleField(),
-                                SizedBox(
-                                  height: 20.0,
-                                ),
-                                TagList(),
-                                AddTagsTile(),
-                                SizedBox(
-                                  height: 20.0,
-                                ),
-                                SubNoteList(),
-                                AddSubNotesTile(),
-                                SizedBox(
-                                  height: 80.0,
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      Positioned.directional(
-                        bottom: 0.0,
-                        start: 48.0,
-                        end: 0,
-                        textDirection: ui.TextDirection.ltr,
-                        child: SizedBox(
-                          width: double.infinity,
-                          height: 64.0,
-                          child: state.isEditing
-                              ? _editState(context)
-                              : _addState(context),
-                        ),
-                      ),
-                      Positioned.fill(
-                        child: SavingInProgressOverlay(
-                          isSaving: state.isSaving,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+        return WidgetHUD(
+          showHUD: state.isSaving,
+          hud: HUD(
+            progressIndicator: const CircularProgressIndicator(
+              color: ColorName.primary,
             ),
           ),
+          builder: (context) {
+            return MultiProvider(
+              providers: [
+                ChangeNotifierProvider(
+                  create: (_) => FormTags(),
+                ),
+                ChangeNotifierProvider(
+                  create: (_) => FormSubNotes(),
+                ),
+              ],
+              child: Form(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                child: Column(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.only(
+                        top: 70.0,
+                        left: 48.0,
+                      ),
+                      width: double.infinity,
+                      child: Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              context.router.pop();
+                            },
+                            child: Assets.images.icBack.image(
+                              height: 16.0,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 15.0,
+                          ),
+                          Text(
+                            state.isEditing
+                                ? LocaleKeys.edit_note
+                                : LocaleKeys.add_note,
+                            style: BaseTextStyle.style(
+                              style: FontStyle.extrabold,
+                              fontSize: 18.0,
+                            ),
+                          ).tr(),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Stack(
+                        children: [
+                          Positioned.fill(
+                            child: Container(
+                              padding: const EdgeInsets.only(
+                                top: 10.0,
+                                left: 48.0,
+                                bottom: 40.0,
+                                right: 8.0,
+                              ),
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  children: const [
+                                    SizedBox(
+                                      height: 20.0,
+                                    ),
+                                    NoteTitleField(),
+                                    SizedBox(
+                                      height: 20.0,
+                                    ),
+                                    TagList(),
+                                    AddTagsTile(),
+                                    SizedBox(
+                                      height: 20.0,
+                                    ),
+                                    SubNoteList(),
+                                    AddSubNotesTile(),
+                                    SizedBox(
+                                      height: 80.0,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned.directional(
+                            bottom: 0.0,
+                            start: 48.0,
+                            end: 0,
+                            textDirection: ui.TextDirection.ltr,
+                            child: SizedBox(
+                              width: double.infinity,
+                              height: 64.0,
+                              child: state.isEditing
+                                  ? _editState(context)
+                                  : _addState(context),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
         );
       },
     );
@@ -282,39 +287,6 @@ class NoteFormBody extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class SavingInProgressOverlay extends StatelessWidget {
-  final bool isSaving;
-
-  const SavingInProgressOverlay({
-    Key? key,
-    required this.isSaving,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return IgnorePointer(
-      ignoring: !isSaving,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 150),
-        color: Colors.transparent,
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        child: Visibility(
-          visible: isSaving,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const <Widget>[
-              CircularProgressIndicator(
-                color: ColorName.primarySecond,
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }

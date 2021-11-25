@@ -60,10 +60,17 @@ class NoteFormBloc extends Bloc<NoteFormEvent, NoteFormState> {
         ),
       );
     }, notesChanged: (e) {
+      final List<NoteItem> temp = [];
+      for (var i = 0; i < e.notes.size; i++) {
+        final item = e.notes.asList()[i].copyWith(
+              index: i,
+            );
+        temp.add(item);
+      }
       emit(
         state.copyWith(
           note: state.note.copyWith(
-            notes: Notes<NoteItem>(e.notes),
+            notes: Notes<NoteItem>(temp.toImmutableList()),
           ),
         ),
       );

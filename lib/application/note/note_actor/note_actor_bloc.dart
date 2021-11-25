@@ -4,6 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:icecream_todo/domain/notes/i_note_repository.dart';
 import 'package:icecream_todo/domain/notes/note.dart';
 import 'package:icecream_todo/domain/notes/note_failure.dart';
+import 'package:icecream_todo/domain/notes/note_item.dart';
 import 'package:injectable/injectable.dart';
 
 part 'note_actor_event.dart';
@@ -38,14 +39,19 @@ class NoteActorBloc extends Bloc<NoteActorEvent, NoteActorState> {
           ),
         );
       },
-      create: (e) async {
-        final response = await _noteRepository.create(Note.empty());
-        response.fold(
-          (f) {
-            print(f);
-          },
-          (r) {},
-        );
+      updateStatus: (e) async {
+        if (e.noteItem.failureOption.isNone()) {
+          final response =
+              await _noteRepository.updateNoteItemStatus(e.noteItem);
+          response.fold(
+            (f) {
+              emit(
+                const NoteActorState.updateFailed(),
+              );
+            },
+            (r) {},
+          );
+        }
       },
     );
   }

@@ -7,4 +7,5 @@ class NoteActorState with _$NoteActorState {
   const factory NoteActorState.deteleFailure(NoteFailure failure) =
       _DeleteFailure;
   const factory NoteActorState.deleteSuccess() = _DeleteSuccess;
+  const factory NoteActorState.updateFailed() = _UpdateFailed;
 }

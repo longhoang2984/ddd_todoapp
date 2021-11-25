@@ -64,9 +64,7 @@ abstract class NoteDto implements _$NoteDto {
     final List<NoteItem> tempNoteList = [];
     for (var i = 0; i < notes.length; i++) {
       final item = notes[i].toDomain.copyWith(
-            id: id +
-                i.toString() +
-                DateTime.now().millisecondsSinceEpoch.toString(),
+            index: i,
           );
       tempNoteList.add(item);
     }
@@ -94,6 +92,7 @@ abstract class NoteItemDto with _$NoteItemDto {
   static const String doneKey = "done";
   static const String nameKey = "name";
   static const String noteIdKey = "noteId";
+  static const String indexKey = "itemIndex";
 
   const factory NoteItemDto({
     required String id,
@@ -101,6 +100,7 @@ abstract class NoteItemDto with _$NoteItemDto {
     required bool done,
     required String ownerId,
     required String noteId,
+    required int index,
     @Default(false) bool isInitial,
   }) = _NoteItemDto;
 
@@ -112,6 +112,7 @@ abstract class NoteItemDto with _$NoteItemDto {
       ownerId: noteItem.ownerId,
       noteId: noteItem.id,
       isInitial: noteItem.isInitial,
+      index: noteItem.index,
     );
   }
 
@@ -123,6 +124,7 @@ abstract class NoteItemDto with _$NoteItemDto {
       ownerId: ownerId,
       noteId: noteId,
       isInitial: false,
+      index: index,
     );
   }
 

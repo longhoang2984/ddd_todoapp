@@ -1,10 +1,10 @@
 import 'dart:ui' as ui;
 
 import 'package:auto_route/auto_route.dart';
-import 'package:dartz/dartz.dart' as dartz;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_hud/flutter_hud.dart';
 import 'package:icecream_todo/application/auth/sign_in_form/sign_in_form_bloc.dart';
 import 'package:icecream_todo/gen/assets.gen.dart';
 import 'package:icecream_todo/gen/colors.gen.dart';
@@ -12,7 +12,6 @@ import 'package:icecream_todo/gen/fonts.gen.dart';
 import 'package:icecream_todo/generated/locale_keys.g.dart';
 import 'package:icecream_todo/presentation/core/email_field.dart';
 import 'package:icecream_todo/presentation/core/password_field.dart';
-import 'package:icecream_todo/presentation/core/utils/base_text_style.dart';
 import 'package:icecream_todo/presentation/core/utils/show_error.dart';
 import 'package:icecream_todo/presentation/routes/router.gr.dart';
 
@@ -38,7 +37,10 @@ class _SignInFormState extends State<SignInForm> {
                 showError(context, msg.message ?? '');
               },
               orElse: () {
-                showError(context, 'Something went wrong');
+                showError(
+                  context,
+                  LocaleKeys.some_thing_wrong.tr(),
+                );
               },
             ),
             (r) {
@@ -48,7 +50,17 @@ class _SignInFormState extends State<SignInForm> {
         );
       },
       builder: (context, state) {
-        return _authForm(context, state);
+        return WidgetHUD(
+          hud: HUD(
+            progressIndicator: const CircularProgressIndicator(
+              color: ColorName.primarySecond,
+            ),
+          ),
+          showHUD: state.isSubmitting,
+          builder: (context) {
+            return _authForm(context, state);
+          },
+        );
       },
     );
   }
@@ -137,7 +149,8 @@ class _SignInFormState extends State<SignInForm> {
                           .value
                           .fold(
                             (f) => f.maybeMap(
-                              invalidEmail: (_) => 'Invalid Email',
+                              invalidEmail: (_) =>
+                                  LocaleKeys.invalid_email.tr(),
                               orElse: () {},
                             ),
                             (r) => null,
@@ -158,7 +171,7 @@ class _SignInFormState extends State<SignInForm> {
                           .fold(
                               (f) => f.maybeMap(
                                     shortPassword: (_) =>
-                                        'Password at least 6 characters',
+                                        LocaleKeys.short_password.tr(),
                                     orElse: () {},
                                   ),
                               (r) => null),

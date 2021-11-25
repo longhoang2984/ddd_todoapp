@@ -15,6 +15,7 @@ abstract class NoteItem implements _$NoteItem {
     required bool done,
     required String ownerId,
     required String noteId,
+    required int index,
     @Default(false) bool isInitial,
   }) = _NoteItem;
 
@@ -25,6 +26,7 @@ abstract class NoteItem implements _$NoteItem {
         ownerId: "",
         noteId: "",
         isInitial: true,
+        index: 0,
       );
 
   Option<ValueFailure<dynamic>> get failureOption {

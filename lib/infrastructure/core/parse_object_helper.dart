@@ -26,6 +26,7 @@ extension ParseObjectX on ParseObject {
       done: get<bool>(NoteItemDto.doneKey) ?? false,
       ownerId: get<String>(NoteItemDto.ownerIDKey) ?? '',
       noteId: noteId,
+      index: get<int>(NoteItemDto.indexKey) ?? 0,
     );
   }
 

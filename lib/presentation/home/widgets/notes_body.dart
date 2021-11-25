@@ -3,7 +3,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_hud/flutter_hud.dart';
+import 'package:icecream_todo/application/auth/auth_bloc.dart';
 import 'package:icecream_todo/application/note/note_watcher/note_watcher_bloc.dart';
+import 'package:icecream_todo/gen/assets.gen.dart';
 import 'package:icecream_todo/gen/colors.gen.dart';
 import 'package:icecream_todo/generated/locale_keys.g.dart';
 import 'package:icecream_todo/presentation/core/gradient_view.dart';
@@ -45,33 +48,67 @@ class NoteBody extends HookWidget {
           ),
         ),
       ),
-      body: Container(
-        padding: const EdgeInsets.only(
-          top: 70.0,
-          bottom: 40.0,
-          left: 48.0,
-          right: 8.0,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              LocaleKeys.notes.tr(),
-              style: BaseTextStyle.style(
-                style: FontStyle.extrabold,
-                fontSize: 40.0,
+      body: BlocBuilder<NoteWatcherBloc, NoteWatcherState>(
+        builder: (context, state) {
+          return WidgetHUD(
+            showHUD: state == const NoteWatcherState.loadInProgress(),
+            hud: HUD(
+              progressIndicator: const CircularProgressIndicator(
+                color: ColorName.primarySecond,
               ),
             ),
-            NoteStatus(
-              onNoteStatusChanged: (status) {
-                toggleState.value = status;
-              },
-            ),
-            NotesList(
-              onNoteChanged: () => _onNoteChanged(context, toggleState.value),
-            ),
-          ],
-        ),
+            builder: (context) {
+              return Container(
+                padding: const EdgeInsets.only(
+                  top: 70.0,
+                  bottom: 40.0,
+                  left: 48.0,
+                  right: 8.0,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            LocaleKeys.notes.tr(),
+                            style: BaseTextStyle.style(
+                              style: FontStyle.extrabold,
+                              fontSize: 40.0,
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () => context
+                              .read<AuthBloc>()
+                              .add(const AuthEvent.logout()),
+                          child: Container(
+                            width: 40,
+                            height: 40,
+                            padding: const EdgeInsets.all(8.0),
+                            child: Assets.images.icLogout.image(
+                              height: 20.0,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    NoteStatus(
+                      onNoteStatusChanged: (status) {
+                        toggleState.value = status;
+                      },
+                    ),
+                    NotesList(
+                      onNoteChanged: () =>
+                          _onNoteChanged(context, toggleState.value),
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        },
       ),
     );
   }

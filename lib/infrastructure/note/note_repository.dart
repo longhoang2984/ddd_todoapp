@@ -4,6 +4,7 @@ import 'package:icecream_todo/domain/auth/user.dart';
 import 'package:icecream_todo/domain/notes/i_note_repository.dart';
 import 'package:icecream_todo/domain/notes/note.dart';
 import 'package:icecream_todo/domain/notes/note_failure.dart';
+import 'package:icecream_todo/domain/notes/note_item.dart';
 import 'package:icecream_todo/infrastructure/core/parse_object_helper.dart';
 import 'package:icecream_todo/infrastructure/note/note_dtos.dart';
 import 'package:icecream_todo/presentation/injection.dart';
@@ -38,6 +39,7 @@ class NoteRepository extends INoteRepository {
         noteItemObject.set(NoteItemDto.doneKey, noteItem.done);
         noteItemObject.set(NoteItemDto.nameKey, noteItem.name);
         noteItemObject.set(NoteItemDto.noteIdKey, noteObject);
+        noteItemObject.set(NoteItemDto.indexKey, noteItem.index + 1);
         await noteItemObject.save();
       }
 
@@ -103,6 +105,7 @@ class NoteRepository extends INoteRepository {
         noteItemObject.set(NoteItemDto.doneKey, noteItem.done);
         noteItemObject.set(NoteItemDto.nameKey, noteItem.name);
         noteItemObject.set(NoteItemDto.noteIdKey, noteObject);
+        noteItemObject.set(NoteItemDto.indexKey, noteItem.index + 1);
         await noteItemObject.save();
       }
 
@@ -137,7 +140,8 @@ class NoteRepository extends INoteRepository {
                 NoteItemDto.noteIdKey,
                 (ParseObject(NoteDto.tableKey)..objectId = note.objectId)
                     .toPointer(),
-              );
+              )
+              ..orderByAscending(NoteItemDto.indexKey);
         final items = await noteItemsQuery.query();
         final List<NoteItemDto> noteItemList = [];
         if (items.count != 0) {
@@ -218,5 +222,27 @@ class NoteRepository extends INoteRepository {
     final user = await getIt<IAuthFacade>().getCurrentUser();
     final String userId = user.getOrElse(() => const User(id: '')).id;
     return userId;
+  }
+
+  @override
+  Future<Either<NoteFailure, Unit>> updateNoteItemStatus(NoteItem note) async {
+    try {
+      final noteItemObject =
+          await ParseObjectX.objectByCurrentUser(NoteItemDto.tableKey);
+      noteItemObject.objectId = note.id;
+      noteItemObject.set(NoteItemDto.doneKey, note.done);
+      final response = await noteItemObject.save();
+      final updateNoteError = response.error;
+      if (updateNoteError != null) {
+        return left(
+          NoteFailure.errorFromServer(updateNoteError.message),
+        );
+      }
+      return right(unit);
+    } catch (e) {
+      return left(
+        const NoteFailure.unexpected(),
+      );
+    }
   }
 }
