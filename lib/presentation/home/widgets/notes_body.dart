@@ -48,67 +48,73 @@ class NoteBody extends HookWidget {
           ),
         ),
       ),
-      body: BlocBuilder<NoteWatcherBloc, NoteWatcherState>(
-        builder: (context, state) {
-          return WidgetHUD(
-            showHUD: state == const NoteWatcherState.loadInProgress(),
-            hud: HUD(
-              progressIndicator: const CircularProgressIndicator(
-                color: ColorName.primarySecond,
-              ),
+      body: Container(
+        padding: const EdgeInsets.only(
+          top: 70.0,
+          bottom: 40.0,
+          left: 48.0,
+          right: 8.0,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    LocaleKeys.notes.tr(),
+                    style: BaseTextStyle.style(
+                      style: FontStyle.extrabold,
+                      fontSize: 40.0,
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () =>
+                      context.read<AuthBloc>().add(const AuthEvent.logout()),
+                  child: Container(
+                    width: 40,
+                    height: 40,
+                    padding: const EdgeInsets.all(8.0),
+                    child: Assets.images.icLogout.image(
+                      height: 20.0,
+                    ),
+                  ),
+                )
+              ],
             ),
-            builder: (context) {
-              return Container(
-                padding: const EdgeInsets.only(
-                  top: 70.0,
-                  bottom: 40.0,
-                  left: 48.0,
-                  right: 8.0,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            LocaleKeys.notes.tr(),
-                            style: BaseTextStyle.style(
-                              style: FontStyle.extrabold,
-                              fontSize: 40.0,
-                            ),
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () => context
-                              .read<AuthBloc>()
-                              .add(const AuthEvent.logout()),
-                          child: Container(
-                            width: 40,
-                            height: 40,
-                            padding: const EdgeInsets.all(8.0),
-                            child: Assets.images.icLogout.image(
-                              height: 20.0,
-                            ),
-                          ),
-                        )
-                      ],
+            NoteStatus(
+              onNoteStatusChanged: (status) {
+                toggleState.value = status;
+              },
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            BlocBuilder<NoteWatcherBloc, NoteWatcherState>(
+              builder: (context, state) {
+                return WidgetHUD(
+                  showHUD: state == const NoteWatcherState.loadInProgress(),
+                  hud: HUD(
+                    color: Colors.transparent,
+                    opacity: 0,
+                    progressIndicator: const LinearProgressIndicator(
+                      color: ColorName.primarySecond,
                     ),
-                    NoteStatus(
-                      onNoteStatusChanged: (status) {
-                        toggleState.value = status;
+                  ),
+                  builder: (context) {
+                    return NotesList(
+                      onNoteChanged: () {
+                        toggleState.value = false;
+                        _onNoteChanged(context, toggleState.value);
                       },
-                    ),
-                    NotesList(
-                      onNoteChanged: () =>
-                          _onNoteChanged(context, toggleState.value),
-                    ),
-                  ],
-                ),
-              );
-            },
-          );
-        },
+                    );
+                  },
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -6,7 +6,7 @@ Either<ValueFailure<String>, String> validateEmail(String value) {
   const String pattern =
       r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
   final RegExp regex = RegExp(pattern);
-  if (!regex.hasMatch(value) && value.isNotEmpty) {
+  if (!regex.hasMatch(value)) {
     return left(
       ValueFailure.invalidEmail(failedValue: value),
     );
@@ -16,7 +16,7 @@ Either<ValueFailure<String>, String> validateEmail(String value) {
 }
 
 Either<ValueFailure<String>, String> validatePassword(String value) {
-  if (value.isNotEmpty && value.length < 6) {
+  if (value.length < 6) {
     return left(
       ValueFailure.shortPassword(failedValue: value),
     );
