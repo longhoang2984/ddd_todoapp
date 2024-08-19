@@ -67,7 +67,7 @@ class NoteFormBody extends StatelessWidget {
               color: ColorName.primary,
             ),
           ),
-          builder: (context) {
+          builder: (BuildContext context, Widget? child) {
             return MultiProvider(
               providers: [
                 ChangeNotifierProvider(

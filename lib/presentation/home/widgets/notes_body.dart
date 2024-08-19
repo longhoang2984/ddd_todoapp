@@ -91,27 +91,29 @@ class NoteBody extends HookWidget {
             const SizedBox(
               height: 20,
             ),
-            BlocBuilder<NoteWatcherBloc, NoteWatcherState>(
-              builder: (context, state) {
-                return WidgetHUD(
-                  showHUD: state == const NoteWatcherState.loadInProgress(),
-                  hud: HUD(
-                    color: Colors.transparent,
-                    opacity: 0,
-                    progressIndicator: const LinearProgressIndicator(
-                      color: ColorName.primarySecond,
+            Expanded(
+              child: BlocBuilder<NoteWatcherBloc, NoteWatcherState>(
+                builder: (context, state) {
+                  return WidgetHUD(
+                    showHUD: state == const NoteWatcherState.loadInProgress(),
+                    hud: HUD(
+                      color: Colors.transparent,
+                      opacity: 0,
+                      progressIndicator: const LinearProgressIndicator(
+                        color: ColorName.primarySecond,
+                      ),
                     ),
-                  ),
-                  builder: (context) {
-                    return NotesList(
-                      onNoteChanged: () {
-                        toggleState.value = false;
-                        _onNoteChanged(context, toggleState.value);
-                      },
-                    );
-                  },
-                );
-              },
+                    builder: (BuildContext context, Widget? child) {
+                      return NotesList(
+                        onNoteChanged: () {
+                          toggleState.value = false;
+                          _onNoteChanged(context, toggleState.value);
+                        },
+                      );
+                    },
+                  );
+                },
+              ),
             ),
           ],
         ),

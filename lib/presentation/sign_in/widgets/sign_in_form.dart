@@ -58,7 +58,7 @@ class _SignInFormState extends State<SignInForm> {
             ),
           ),
           showHUD: state.isSubmitting,
-          builder: (context) {
+          builder: (context, _) {
             return _authForm(context, state);
           },
         );

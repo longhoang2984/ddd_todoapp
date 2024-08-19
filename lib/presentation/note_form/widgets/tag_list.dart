@@ -1,3 +1,4 @@
+import 'package:animated_list_plus/animated_list_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,7 +13,6 @@ import 'package:icecream_todo/generated/locale_keys.g.dart';
 import 'package:icecream_todo/presentation/core/utils/base_text_style.dart';
 import 'package:icecream_todo/presentation/note_form/misc/build_context_x.dart';
 import 'package:icecream_todo/presentation/note_form/widgets/add_tag_tile.dart';
-import 'package:implicitly_animated_reorderable_list/implicitly_animated_reorderable_list.dart';
 import 'package:kt_dart/collection.dart';
 import 'package:provider/provider.dart';
 
@@ -38,7 +38,7 @@ class TagList extends StatelessWidget {
                     NoteFormEvent.tagsChanged(context.formTags),
                   );
             },
-            itemBuilder: (context, itemAnimation, item, index) {
+            itemBuilder: (context, itemAnimation, item, int index) {
               return Reorderable(
                 builder: (context, dragAnimation, inDrag) {
                   return ScaleTransition(

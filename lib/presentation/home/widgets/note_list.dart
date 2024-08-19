@@ -27,84 +27,86 @@ class NotesList extends StatelessWidget {
           initial: (_) => Container(),
           loadInProgress: (_) => Container(),
           loadSuccess: (state) {
-            return Expanded(
-              child: ListView.separated(
-                separatorBuilder: (context, index) {
-                  return const SizedBox(
-                    height: 20.0,
-                  );
-                },
-                itemCount: state.notes.size,
-                // shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  final note = state.notes[index];
-                  return GestureDetector(
-                    onTap: () {
-                      context.router.push(
-                        NoteFormPageRoute(
-                            note: note, onNoteChanged: onNoteChanged),
-                      );
-                    },
-                    onLongPress: () {
-                      _showDeletionDialog(
-                          context, context.read<NoteActorBloc>(), note);
-                    },
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          height: 24.0,
+            return ListView.separated(
+              separatorBuilder: (context, index) {
+                return const SizedBox(
+                  height: 20.0,
+                );
+              },
+              itemCount: state.notes.size,
+              itemBuilder: (context, index) {
+                final note = state.notes[index];
+                return GestureDetector(
+                  onTap: () {
+                    context.router.push(
+                      NoteFormPageRoute(
+                        note: note,
+                        onNoteChanged: onNoteChanged,
+                      ),
+                    );
+                  },
+                  onLongPress: () {
+                    _showDeletionDialog(
+                      context,
+                      context.read<NoteActorBloc>(),
+                      note,
+                    );
+                  },
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: 24.0,
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 4.0,
+                          horizontal: 16.0,
+                        ),
+                        decoration: BoxDecoration(
+                          color: ColorName.tertiaryLight.withAlpha(90),
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(12.0),
+                          ),
+                        ),
+                        child: Text(
+                          note.title.value.getOrElse(() => '').toUpperCase(),
+                          style: BaseTextStyle.style(
+                            color: Colors.white,
+                            fontSize: 12.0,
+                            style: FontStyle.dark,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        height: 8.0,
+                      ),
+                      getLinearGradientView(
+                        radius: 2.0,
+                        colors: [
+                          ColorName.tertiaryLight.withAlpha(60),
+                          ColorName.tertiaryExtraLight,
+                        ],
+                        child: Padding(
                           padding: const EdgeInsets.symmetric(
-                            vertical: 4.0,
-                            horizontal: 16.0,
+                            vertical: 16.0,
+                            horizontal: 24.0,
                           ),
-                          decoration: BoxDecoration(
-                            color: ColorName.tertiaryLight.withAlpha(90),
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(12.0),
-                            ),
-                          ),
-                          child: Text(
-                            note.title.value.getOrElse(() => '').toUpperCase(),
-                            style: BaseTextStyle.style(
-                              color: Colors.white,
-                              fontSize: 12.0,
-                              style: FontStyle.dark,
-                            ),
+                          child: Column(
+                            children: [
+                              // ignore: prefer_if_elements_to_conditional_expressions
+                              _getTagsList(note),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              // ignore: prefer_if_elements_to_conditional_expressions
+                              _getNoteList(note),
+                            ],
                           ),
                         ),
-                        Container(
-                          height: 8.0,
-                        ),
-                        getLinearGradientView(
-                          radius: 2.0,
-                          colors: [
-                            ColorName.tertiaryLight.withAlpha(60),
-                            ColorName.tertiaryExtraLight,
-                          ],
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 16.0,
-                              horizontal: 24.0,
-                            ),
-                            child: Column(
-                              children: [
-                                // ignore: prefer_if_elements_to_conditional_expressions
-                                _getTagsList(note),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                // ignore: prefer_if_elements_to_conditional_expressions
-                                _getNoteList(note),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
+                      ),
+                    ],
+                  ),
+                );
+              },
             );
           },
           loadFailure: (_) => Container(),

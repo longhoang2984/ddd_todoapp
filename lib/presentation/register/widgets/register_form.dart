@@ -58,7 +58,7 @@ class _RegisterFormState extends State<RegisterForm> {
               color: ColorName.primarySecond,
             ),
           ),
-          builder: (context) {
+          builder: (context, _) {
             return Form(
               autovalidateMode: AutovalidateMode.onUserInteraction,
               child: SingleChildScrollView(
